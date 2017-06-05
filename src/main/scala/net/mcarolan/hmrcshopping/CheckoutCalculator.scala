@@ -14,6 +14,10 @@ case object Orange extends Product {
 
 object CheckoutCalculator {
 
-  def price(basket: List[Product]): BigDecimal = BigDecimal(0)
+  def price(basket: List[Product]): BigDecimal =
+    if (basket.isEmpty)
+      BigDecimal(0)
+    else
+      basket.head.unitPrice
 
 }
