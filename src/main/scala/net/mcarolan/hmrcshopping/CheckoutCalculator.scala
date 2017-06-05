@@ -18,6 +18,6 @@ object CheckoutCalculator {
     if (basket.isEmpty)
       BigDecimal(0)
     else
-      basket.head.unitPrice
+      basket.head.unitPrice * basket.size
 
 }

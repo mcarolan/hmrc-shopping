@@ -24,4 +24,12 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
     }
   }
 
+  test("Price of basket with mixed items should be sum of unit prices") {
+    val numberOfOranges = 3
+    val numberOfApples = 4
+    val basket = List.fill(numberOfOranges)(Orange) ++ List.fill(numberOfApples)(Apple)
+    val expectedPrice = Orange.unitPrice * numberOfOranges + Apple.unitPrice * numberOfApples
+    CheckoutCalculator.price(basket) shouldBe expectedPrice
+  }
+
 }
