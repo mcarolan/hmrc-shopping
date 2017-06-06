@@ -19,19 +19,14 @@ object CheckoutCalculator {
   def priceWithOffers(basket: List[Product], offers: List[Offer]): BigDecimal = {
     val productQuantity: Map[Product, Int] = basket.groupBy(identity).mapValues(_.size)
 
-    val basketAfterOffersApplied =
-      productQuantity.flatMap { case (product, quantity) =>
-        val offerOpt = offers.find(_.product == product)
-        val numberFree = offerOpt.fold(0) { offer =>
-          quantity / offer.quantityRequired * offer.numberFree
-        }
+    productQuantity.map { case (product, quantity) =>
+      val offerOpt = offers.find(_.product == product)
+      val numberFree = offerOpt.fold(0) { offer =>
+        quantity / offer.quantityRequired * offer.numberFree
+      }
 
-        List.fill(quantity + numberFree * -1)(product)
-      }.toList
-
-    basketAfterOffersApplied.foldLeft(BigDecimal(0)){ case (acc, product) =>
-      acc + product.unitPrice
-    }
+      (quantity + numberFree * -1) * product.unitPrice
+    }.sum
   }
 
 }
