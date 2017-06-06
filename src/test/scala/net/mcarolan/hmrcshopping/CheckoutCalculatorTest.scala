@@ -32,4 +32,10 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
     CheckoutCalculator.price(basket) shouldBe expectedPrice
   }
 
+  val appleOffer = Offer(Apple, quantityRequired = 2, numberFree = 1)
+
+  test("Reduce basket with 2 Apples only and bogof offer yields 1 apple") {
+    CheckoutCalculator.reduceBasketWithOffers(List(Apple, Apple), List(appleOffer)) shouldBe List(Apple)
+  }
+
 }
