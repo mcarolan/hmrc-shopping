@@ -22,6 +22,6 @@ object CheckoutCalculator {
     }
 
   def reduceBasketWithOffers(basket: List[Product], offers: List[Offer]): List[Product] =
-    ???
+    basket.take(offers.head.numberFree)
 
 }
