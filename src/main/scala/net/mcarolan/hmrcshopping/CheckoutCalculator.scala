@@ -21,7 +21,9 @@ object CheckoutCalculator {
       acc + product.unitPrice
     }
 
-  def reduceBasketWithOffers(basket: List[Product], offers: List[Offer]): List[Product] =
-    basket.take(offers.head.numberFree)
+  def reduceBasketWithOffers(basket: List[Product], offers: List[Offer]): List[Product] = {
+    val timesApplicable = basket.size / offers.head.quantityRequired
+    List.fill(basket.size + timesApplicable * offers.head.numberFree * -1)(basket.head)
+  }
 
 }

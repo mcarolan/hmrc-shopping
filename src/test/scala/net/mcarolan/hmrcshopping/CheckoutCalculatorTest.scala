@@ -42,4 +42,8 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
     CheckoutCalculator.reduceBasketWithOffers(List(Apple, Apple, Apple), List(appleOffer)) shouldBe List(Apple, Apple)
   }
 
+  test("Reduce basket with 2 Apples and 1 Orange, with bogof for Apples yields 1 Apple 1 Orange") {
+    CheckoutCalculator.reduceBasketWithOffers(List(Apple, Orange, Apple), List(appleOffer)) shouldBe List(Apple, Orange)
+  }
+
 }
