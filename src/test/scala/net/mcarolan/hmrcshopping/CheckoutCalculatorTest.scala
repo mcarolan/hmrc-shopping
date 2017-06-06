@@ -33,6 +33,7 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
   }
 
   val appleOffer = Offer(Apple, quantityRequired = 2, numberFree = 1)
+  val orangeOffer = Offer(Orange, quantityRequired = 3, numberFree = 1)
 
   test("Reduce basket with 2 Apples only and bogof offer yields 1 apple") {
     CheckoutCalculator.reduceBasketWithOffers(List(Apple, Apple), List(appleOffer)) shouldBe List(Apple)
@@ -43,7 +44,14 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
   }
 
   test("Reduce basket with 2 Apples and 1 Orange, with bogof for Apples yields 1 Apple 1 Orange") {
-    CheckoutCalculator.reduceBasketWithOffers(List(Apple, Orange, Apple), List(appleOffer)) shouldBe List(Apple, Orange)
+    val result = CheckoutCalculator.reduceBasketWithOffers(List(Apple, Orange, Apple), List(appleOffer))
+    result should contain theSameElementsAs List(Apple, Orange)
+  }
+
+  test("Reduce basket with 2 Apples, 3 Oranges with bogof Apples, 3 for 2 Oranges yields 1 Apple 2 Oranges") {
+    val basket = List(Apple, Orange, Apple, Orange, Orange)
+    val result = CheckoutCalculator.reduceBasketWithOffers(basket, List(appleOffer, orangeOffer))
+    result should contain theSameElementsAs List(Apple, Orange, Orange)
   }
 
 }

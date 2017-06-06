@@ -22,8 +22,12 @@ object CheckoutCalculator {
     }
 
   def reduceBasketWithOffers(basket: List[Product], offers: List[Offer]): List[Product] = {
-    val timesApplicable = basket.size / offers.head.quantityRequired
-    List.fill(basket.size + timesApplicable * offers.head.numberFree * -1)(basket.head)
+    val productQuantity: Map[Product, Int] = basket.groupBy(identity).mapValues(_.size)
+
+    productQuantity.flatMap { case (product, quantity) =>
+      val timesApplicable = if (offers.head.product == product) quantity / offers.head.quantityRequired else 0
+      List.fill(quantity + timesApplicable * offers.head.numberFree * -1)(product)
+    }.toList
   }
 
 }
