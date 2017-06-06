@@ -54,4 +54,10 @@ class CheckoutCalculatorTest extends FunSuite with Matchers {
     result should contain theSameElementsAs List(Apple, Orange, Orange)
   }
 
+  test("Basket reduction with multiple applications of offers") {
+    val basket = List(Apple, Orange, Apple, Orange, Apple, Orange, Orange, Apple, Apple)
+    val result = CheckoutCalculator.reduceBasketWithOffers(basket, List(appleOffer, orangeOffer))
+    result should contain theSameElementsAs List(Apple, Apple, Apple, Orange, Orange, Orange)
+  }
+
 }
